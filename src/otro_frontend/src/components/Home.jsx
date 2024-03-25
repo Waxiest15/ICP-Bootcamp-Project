@@ -12,6 +12,7 @@ import Alumnos from "./Alumnos";
 import AreaNueva from "./AreaNueva";
 
 import LibroNuevo from "./Books/Add";
+import Libros from "./Books/Show";
 
 
 const Home = () => {
@@ -37,8 +38,6 @@ const Home = () => {
             "padding": "3px",
             "margin-left": "4px"
         }
-
-
         Object.assign(btn2[0].style, custom_style);
 
         const texto = Array.from(document.getElementsByClassName('button-label'));
@@ -47,7 +46,6 @@ const Home = () => {
 
         const img = Array.from(document.getElementsByClassName('img-styles'));
         img[0].style.height = "25px";
-
     });
 
     onElementAvailable(".connect-button", () => {
@@ -61,18 +59,12 @@ const Home = () => {
             btn[0].textContent = 'Conectar II';
         else
             btn[0].textContent = 'Desconectar II';
-
-
     });
-
-
     return (
         <BrowserRouter>
             <nav style={{ backgroundColor: 'red', }} className="navbar navbar-expand-lg" data-bs-theme="dark">
-
                 {principal ? (
                     <div className="container-fluid">
-
                         <Link to='/' className="navbar-brand">LIbreria IC</Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
@@ -118,15 +110,11 @@ const Home = () => {
                                         <li><Link to='/alumnos' className="dropdown-item" >Lista</Link></li>
                                     </ul>
                                 </li>
-
                             </ul>
-
                             {/* <span className="fs-6 text">{principal}</span> */}
                             <ConnectButton />
                             <ConnectDialog />
                         </div>
-
-
                     </div>
                 )
                     : (
@@ -149,6 +137,9 @@ const Home = () => {
                     )}
 
             </nav>
+            <div>
+                <Libros/>
+            </div>
             <Routes>
                 <Route path="/Books/Add" element={<LibroNuevo />} />
                 <Route path="/" element={<Login />} />
