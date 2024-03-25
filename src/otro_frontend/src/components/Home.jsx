@@ -62,7 +62,7 @@ const Home = () => {
     });
     return (
         <BrowserRouter>
-            <nav style={{ backgroundColor: 'red', }} className="navbar navbar-expand-lg" data-bs-theme="dark">
+            <nav style={{ backgroundColor: 'red', width: "100%" }} className="navbar navbar-expand-lg mt-3" data-bs-theme="dark">
                 {principal ? (
                     <div className="container-fluid">
                         <Link to='/' className="navbar-brand">LIbreria IC</Link>
@@ -79,35 +79,8 @@ const Home = () => {
                                         Libros
                                     </a>
                                     <ul className="dropdown-menu">
+                                        <li><Link to='/Books/Show' className="dropdown-item" >Ver</Link></li>
                                         <li><Link to='/Books/Add' className="dropdown-item" >Nuevo</Link></li>
-                                        {/* <li><Link to='/areas' className="dropdown-item" id="btnListaAreas">Lista</Link></li> */}
-                                    </ul>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Área
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <li><Link to='/area-nueva' className="dropdown-item" >Nuevo</Link></li>
-                                        <li><Link to='/areas' className="dropdown-item" id="btnListaAreas">Lista</Link></li>
-                                    </ul>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Programas
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <li><Link to='/programas' className="dropdown-item" >Nuevo</Link></li>
-                                        <li><Link to='/programas' className="dropdown-item" >Lista</Link></li>
-                                    </ul>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Alumnos
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <li><Link to='/alumnos' className="dropdown-item" >Nuevo</Link></li>
-                                        <li><Link to='/alumnos' className="dropdown-item" >Lista</Link></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -138,10 +111,11 @@ const Home = () => {
 
             </nav>
             <div>
-                <Libros/>
+                {/* <Libros /> */}
             </div>
             <Routes>
                 <Route path="/Books/Add" element={<LibroNuevo />} />
+                <Route path="/Books/Show" element={<Libros />} />
                 <Route path="/" element={<Login />} />
                 <Route path="/areas" element={<Areas />} />
                 <Route path="/area-nueva" element={<AreaNueva />} />
