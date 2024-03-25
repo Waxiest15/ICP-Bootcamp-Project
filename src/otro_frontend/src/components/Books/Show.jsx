@@ -111,44 +111,49 @@ const Libros = () => {
                                 <div>
                                     <p>Ups! parece que aun no hay libros</p>
                                 </div> :
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Título</th>
-                                            <th>Autor(es)</th>
-                                            <th>Editorial</th>
-                                            <th>ISBN</th>
-                                            <th>Año de publicación</th>
-                                            <th>Género</th>
-                                            <th>Sinopsis</th>
-                                            <th>Precio</th>
-                                            <th>Cantidad disponible</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {libros.map((libro) => (
-                                            <tr key={libro.id}>
-                                                <td>{libro.id}</td>
-                                                <td>{libro.titulo}</td>
-                                                <td>{libro.autores}</td>
-                                                <td>{libro.editorial}</td>
-                                                <td>{libro.isbn}</td>
-                                                <td>{libro.añoPublicacion}</td>
-                                                <td>{libro.genero}</td>
-                                                <td>{libro.sinopsis}</td>
-                                                <td>{libro.precio}</td>
-                                                <td>{libro.cantidadDisponible}</td>
-                                                <td>
-                                                    <button className="btn btn-danger" onClick={() => eliminarLibro(libro.id)}>
-                                                        Eliminar
-                                                    </button>
-                                                </td>
+                                <div className="table-responsive">
+                                    <table className="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Título</th>
+                                                <th>Autor(es)</th>
+                                                <th>Editorial</th>
+                                                <th>ISBN</th>
+                                                <th>Año de publicación</th>
+                                                <th>Género</th>
+                                                <th>Sinopsis</th>
+                                                <th>Precio</th>
+                                                <th>Cantidad disponible</th>
+                                                <th>Acciones</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            {libros.map((libro) => (
+                                                <tr key={libro.id}>
+                                                    <td>{libro.id}</td>
+                                                    <td>{libro.titulo}</td>
+                                                    <td>{libro.autores}</td>
+                                                    <td>{libro.editorial}</td>
+                                                    <td>{libro.isbn}</td>
+                                                    <td>{libro.añoPublicacion}</td>
+                                                    <td>{libro.genero}</td>
+                                                    <td>{libro.sinopsis}</td>
+                                                    <td>{libro.precio}</td>
+                                                    <td>{libro.cantidadDisponible}</td>
+                                                    <td>
+                                                        <button className="btn btn-danger" onClick={() => eliminarLibro(libro.id)}>
+                                                            Eliminar
+                                                        </button>
+                                                        <button className="btn btn-primary" onClick={() => editarLibro(libro.id)}>
+                                                            Editar
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             }
                         </div>
                     </div>
