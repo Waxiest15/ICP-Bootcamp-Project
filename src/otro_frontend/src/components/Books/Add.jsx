@@ -2,7 +2,7 @@ import { useCanister } from "@connect2ic/react";
 import React, { useState } from "react";
 
 const Libros = () => {
-    const [libreriaCanister] = useCanister("nombre_del_canister");
+    const [libreriaCanister] = useCanister("otro_backend");
     const [loading, setLoading] = useState("");
 
     const agregarLibro = async (e) => {
@@ -11,7 +11,7 @@ const Libros = () => {
         const autores = e.target.autores.value;
         const editorial = e.target.editorial.value;
         const isbn = e.target.isbn.value;
-        const añoPublicacion = e.target.añoPublicacion.value;
+        const anoPublicacion = e.target.anoPublicacion.value;
         const genero = e.target.genero.value;
         const sinopsis = e.target.sinopsis.value;
         const precio = parseFloat(e.target.precio.value);
@@ -21,20 +21,21 @@ const Libros = () => {
         setLoading("Agregando libro...");
 
         // Llama al método en el canister para agregar el libro
-        await libreriaCanister.agregarLibro({
+        await libreriaCanister.crearLibro(
             titulo,
             autores,
             editorial,
             isbn,
-            añoPublicacion,
+            anoPublicacion,
             genero,
             sinopsis,
             precio,
             cantidadDisponible,
             imagenPortada
-        });
-
+        );
+        //await libreriaCanister.crearLibro(area);
         setLoading("");
+
     };
 
     return (
@@ -62,8 +63,8 @@ const Libros = () => {
                                 <input type="text" className="form-control" id="isbn" required />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="añoPublicacion" className="form-label">Año de publicación</label>
-                                <input type="number" className="form-control" id="añoPublicacion" required />
+                                <label htmlFor="anoPublicacion" className="form-label">Ano de publicación</label>
+                                <input type="number" className="form-control" id="anoPublicacion" required />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="genero" className="form-label">Género</label>

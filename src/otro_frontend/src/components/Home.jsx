@@ -6,10 +6,6 @@ import * as otro_backend from "declarations/otro_backend";
 import { useConnect } from "@connect2ic/react";
 import { BrowserRouter, Route, Link, Routes } from 'react-router-dom';
 import Login from "./Bienvenida";
-import Areas from "./Areas";
-import Programas from "./Programas";
-import Alumnos from "./Alumnos";
-import AreaNueva from "./AreaNueva";
 
 import LibroNuevo from "./Books/Add";
 import Libros from "./Books/Show";
@@ -117,10 +113,6 @@ const Home = () => {
                 <Route path="/Books/Add" element={<LibroNuevo />} />
                 <Route path="/Books/Show" element={<Libros />} />
                 <Route path="/" element={<Login />} />
-                <Route path="/areas" element={<Areas />} />
-                <Route path="/area-nueva" element={<AreaNueva />} />
-                <Route path="/programas" element={<Programas />} />
-                <Route path="/alumnos" element={<Alumnos />} />
             </Routes>
 
         </BrowserRouter>

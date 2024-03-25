@@ -2,80 +2,128 @@ import HashMap "mo:base/HashMap";
 import Iter "mo:base/Iter";
 import Nat32 "mo:base/Nat32";
 import Text "mo:base/Text";
-import Principal "mo:base/Principal";
 import Debug "mo:base/Debug";
 
+actor Libros {
+  type Libro = {
+    ID: Text;
+    Titulo: Text;
+    Autores: Text;
+    Editorial: Text;
+    ISBN: Text;
+    Ano_de_publicacion: Text;
+    Genero: Text;
+    Sinopsis: Text;
+    Precio: Nat32;
+    Cantidad_disponible: Nat32;
+    Imagen_de_portada: Text;
+  };
 
-actor Areas {
-  type Area = {
-		nombre: Text;
-	};
+  type LibroID = Nat32;
+  stable var libroID: LibroID = 0;
 
-  type areaID = Nat32;
-	stable var areaID: areaID = 0;
+  let listaLibros = HashMap.HashMap<Text, Libro>(0, Text.equal, Text.hash);
 
-	let listaAreas = HashMap.HashMap<Text, Area>(0, Text.equal, Text.hash);
+  private func generaLibroID() : Text {
+    libroID += 1;
+    return Nat32.toText(libroID);
+  };
 
-	private func generaAreaID() : Nat32 {
-		areaID += 1;
-		return areaID;
-	};
-	
-	public query ({caller}) func whoami() : async Principal {
-		return caller;
-	};
+  public shared(msg) func crearLibro(
+    titulo: Text,
+    autores: Text,
+    editorial: Text,
+    isbn: Text,
+    anoDePublicacion: Text,
+    genero: Text,
+    sinopsis: Text,
+    precio: Nat32,
+    cantidadDisponible: Nat32,
+    imagenDePortada: Text,
+  ) : async () {
+    let libro = {
+      ID = generaLibroID();
+      Titulo = titulo;
+      Autores = autores;
+      Editorial = editorial;
+      ISBN = isbn;
+      Ano_de_publicacion = anoDePublicacion;
+      Genero = genero;
+      Sinopsis = sinopsis;
+      Precio = precio;
+      Cantidad_disponible = cantidadDisponible;
+      Imagen_de_portada = imagenDePortada;
+    };
 
-	public shared (msg) func crearArea(nombre: Text) : async () {
-		let area = {nombre=nombre};
+    listaLibros.put(libro.ID, libro);
+    Debug.print("Nuevo libro creado ID: " # libro.ID);
+    return ();
+  };
 
-		listaAreas.put(Nat32.toText(generaAreaID()), area);
-		Debug.print("Nueva área creada ID: " # Nat32.toText(areaID));
-		return ();
-	};
+  public query func obtenerLibros() : async [(Text, Libro)] {
+    let libroIter : Iter.Iter<(Text, Libro)> = listaLibros.entries();
+    let libroArray : [(Text, Libro)] = Iter.toArray(libroIter);
+    Debug.print("Libros ");
+    return libroArray;
+  };
 
-	public query func obtieneAreas () : async [(Text, Area)] {
-		let areaIter : Iter.Iter<(Text, Area)> = listaAreas.entries();
-		let areaArray : [(Text, Area)] = Iter.toArray(areaIter);
-		Debug.print("Areas ");
+  public query func obtenerLibro(id: Text) : async ?Libro {
+    let libro: ?Libro = listaLibros.get(id);
+    return libro;
+  };
 
-		return areaArray;
-	};
+  public shared(msg) func actualizarLibro(
+    id: Text,
+    titulo: Text,
+    autores: Text,
+    editorial: Text,
+    isbn: Text,
+    anoDePublicacion: Text,
+    genero: Text,
+    sinopsis: Text,
+    precio: Nat32,
+    cantidadDisponible: Nat32,
+    imagenDePortada: Text,
+  ) : async Bool {
+    let libro: ?Libro = listaLibros.get(id);
 
-	public query func obtieneArea (id: Text) : async ?Area {
-		let area: ?Area = listaAreas.get(id);
-		return area;
-	};
+    switch (libro) {
+      case (null) {
+        return false;
+      };
+      case (?libroActual) {
+        let nuevoLibro: Libro = {
+          ID = id;
+          Titulo = titulo;
+          Autores = autores;
+          Editorial = editorial;
+          ISBN = isbn;
+          Ano_de_publicacion = anoDePublicacion;
+          Genero = genero;
+          Sinopsis = sinopsis;
+          Precio = precio;
+          Cantidad_disponible = cantidadDisponible;
+          Imagen_de_portada = imagenDePortada;
+        };
+        listaLibros.put(id, nuevoLibro);
+        Debug.print("Libro actualizado: " # id);
+        return true;
+      };
+    };
+  };
 
-	public shared (msg) func actualizarArea (id: Text, nombre: Text) : async Bool {
-		let area: ?Area = listaAreas.get(id);
+  public func eliminarLibro(id: Text) : async Bool {
+    let libro: ?Libro = listaLibros.get(id);
 
-		switch (area) {
-			case (null) {
-				return false;
-			};
-			case (?areaActual) {
-				let nuevaArea: Area = {nombre=nombre};
-				listaAreas.put(id, nuevaArea);
-				Debug.print("Area actualizada: " # id);
-				return true;
-			};
-		};
-
-	};
-
-	public func eliminarArea (id: Text) : async Bool {
-		let area : ?Area = listaAreas.get(id);
-		switch (area) {
-			case (null) {
-				return false;
-			};
-			case (_) {
-				ignore listaAreas.remove(id);
-				Debug.print("Área eliminadaD: " # id);
-				return true;
-			};
-		};
-	};
-
-
+    switch (libro) {
+      case (null) {
+        return false;
+      };
+      case (_) {
+        ignore listaLibros.remove(id);
+        Debug.print("Libro eliminado: " # id);
+        return true;
+      };
+    };
+  };
 };

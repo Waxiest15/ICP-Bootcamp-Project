@@ -78,8 +78,8 @@ const Libros = () => {
     const obtenerLibros = async () => {
         setLoading("Cargando...");
         try {
-            //const librosObtenidos = await libreriaCanister.obtenerLibros();
-            const librosObtenidos = librosMock;
+            const librosObtenidos = await libreriaCanister.obtenerLibros();
+            //const librosObtenidos = librosMock;
             setLibros(librosObtenidos);
             setLoading("");
         } catch (error) {
@@ -129,23 +129,24 @@ const Libros = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {libros.map((libro) => (
-                                                <tr key={libro.id}>
-                                                    <td>{libro.id}</td>
-                                                    <td>{libro.titulo}</td>
-                                                    <td>{libro.autores}</td>
-                                                    <td>{libro.editorial}</td>
-                                                    <td>{libro.isbn}</td>
-                                                    <td>{libro.añoPublicacion}</td>
-                                                    <td>{libro.genero}</td>
-                                                    <td>{libro.sinopsis}</td>
-                                                    <td>{libro.precio}</td>
-                                                    <td>{libro.cantidadDisponible}</td>
+                                            {libros.map(libro => (
+                                                <tr key={libro[0]}>
+                                                    <td>{libro[0]}</td>
+                                                    <td>{libro[1].Titulo}</td>
+                                                    <td>{libro[1].Autores}</td>
+                                                    <td>{libro[1].Editorial}</td>
+                                                    <td>{libro[1].ISBN}</td>
+                                                    <td>{libro[1].Ano_de_publicacion}</td>
+                                                    <td>{libro[1].Genero}</td>
+                                                    <td>{libro[1].Sinopsis}</td>
+                                                    <td>{libro[1].Precio}</td>
+                                                    <td>{libro[1].Cantidad_disponible}</td>
+                                                    {/* <td>{libro[1].Imagen_de_portada}</td> */}
                                                     <td>
-                                                        <button className="btn btn-danger" onClick={() => eliminarLibro(libro.id)}>
+                                                        <button className="btn btn-danger" onClick={() => eliminarLibro(libro[0])}>
                                                             Eliminar
                                                         </button>
-                                                        <button className="btn btn-primary" onClick={() => editarLibro(libro.id)}>
+                                                        <button className="btn btn-primary" onClick={() => editarLibro(libro[0])}>
                                                             Editar
                                                         </button>
                                                     </td>
